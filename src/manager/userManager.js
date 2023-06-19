@@ -3,8 +3,9 @@ const User = require('../models/User')
 
 
 
-exports.create = async (data) => User.create(data)
+exports.create =  (data) => User.create(data)
 
+exports.findOne = (data) => User.findOne(data)
 
 
     
