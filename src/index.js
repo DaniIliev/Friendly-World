@@ -4,6 +4,7 @@ const dbConfig = require('./config/dbConfig')
 const setupViewEngine = require('./config/configHandlebars')
 const routes = require('./routes')
 const cookieParser = require('cookie-parser')
+const authentication = require('./middleware/authMiddleware')
 
 const app = express()
 
@@ -13,7 +14,10 @@ dbConfig()
 app.use(express.static('src/public'))
 app.use(cookieParser())
 app.use(express.urlencoded({extended:false}))
+app.use(authentication.auth)
 app.use(routes)
+
+
 
 
 

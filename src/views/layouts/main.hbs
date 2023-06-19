@@ -28,17 +28,18 @@
                     <a href="/search">Search</a>
                 </div>
 
-                <!-- Logged-in users -->
+                {{#if isAuthenticated}}
                 <div class="user">
                     <a href="/create">Add Animal</a>
                     <a href="/user/logout">Logout</a>
                 </div>
-
+                    {{else}}
                 <!-- Guest users -->
                 <div class="guest">
                     <a href="/user/login">Login</a>
                     <a href="/user/register">Register</a>
                 </div>
+                {{/if}}
             </nav>
         </header>
     {{{body}}}
