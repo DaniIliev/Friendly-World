@@ -31,9 +31,11 @@ const animalSchema = new mongoose.Schema({
     },
     donations:{
         type: mongoose.Types.ObjectId,
+        ref: 'User'
     },
     owner:{
         type: mongoose.Types.ObjectId,
+        ref: 'User'
     },
 })
 
