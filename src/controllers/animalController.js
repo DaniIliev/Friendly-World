@@ -32,5 +32,16 @@ router.post('/:id/edit', async (req,res) => {
     }
 })
 
+router.get('/:id/delete', async (req,res) => {
+    const animalId = req.params.id
+
+    try{
+        await animalManager.delete(animalId)
+        res.redirect('/catalog')
+    }catch(err){
+        res.redirect('/404')
+    }
+})
+
 
 module.exports = router
