@@ -9,7 +9,6 @@ const app = express()
 setupViewEngine(app)
 dbConfig()
 
-
 app.use(express.static('src/public'))
 app.use(express.urlencoded({extended:false}))
 app.use(routes)
