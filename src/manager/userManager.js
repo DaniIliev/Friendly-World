@@ -1,5 +1,10 @@
-const router = require('express').Router()
+const User = require('../models/User')
 
 
 
-module.exports = router
+
+exports.create = async (data) => User.create(data)
+
+
+
+    

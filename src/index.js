@@ -3,6 +3,7 @@ const express = require('express')
 const dbConfig = require('./config/dbConfig')
 const setupViewEngine = require('./config/configHandlebars')
 const routes = require('./routes')
+const cookieParser = require('cookie-parser')
 
 const app = express()
 
@@ -10,8 +11,10 @@ setupViewEngine(app)
 dbConfig()
 
 app.use(express.static('src/public'))
+app.use(cookieParser())
 app.use(express.urlencoded({extended:false}))
 app.use(routes)
+
 
 
 

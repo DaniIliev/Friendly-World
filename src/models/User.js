@@ -22,4 +22,6 @@ Schema.method('validatePassword', function(value){
     bcrypt.compare(this.password, value)
 })
 
-mongoose.model('User', Schema)
+const User = mongoose.model('User', Schema)
+
+module.exports = User
