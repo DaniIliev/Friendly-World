@@ -27,21 +27,21 @@ router.get('/catalog', async (req,res) => {
     res.render('catalog', {animals, noAnimals})
 })
 
-router.get('/search', isAuth.isAuthenticated, (req,res) => {
+router.get('/search', (req,res) => {
     res.render('search')
 })
 
-router.post('/search', async (req,res) => {
+router.post('/search', isAuth.isAuthenticated, async (req,res) => {
     const animals = await animalManager.getAll().lean()
     const {text} = req.body
     console.log(text)
     const maches = []
     for (const animal of animals) {
-        if(animal.name.toLowerCase().includes(text.toLowerCase())){
+        if(animal.location.toLowerCase().includes(text.toLowerCase())){
             maches.push(animal)
         }
     }
     const noMaches = maches.length == 0
-    res.render('search', maches, text, noMaches)
+    res.render('search', {maches, text, noMaches})
 })
 module.exports = router
