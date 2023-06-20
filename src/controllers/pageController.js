@@ -1,7 +1,8 @@
 const router = require('express').Router()
 const animalManager = require('../manager/animalManager')
+const isAuth = require('../middleware/authMiddleware')
 
-router.get('/create', (req,res) => {
+router.get('/create', isAuth.isAuthenticated, (req,res) => {
     res.render('create')
 })
 
@@ -24,5 +25,23 @@ router.get('/catalog', async (req,res) => {
     const noAnimals = animals.length == 0
 
     res.render('catalog', {animals, noAnimals})
+})
+
+router.get('/search', isAuth.isAuthenticated, (req,res) => {
+    res.render('search')
+})
+
+router.post('/search', async (req,res) => {
+    const animals = await animalManager.getAll().lean()
+    const {text} = req.body
+    console.log(text)
+    const maches = []
+    for (const animal of animals) {
+        if(animal.name.toLowerCase().includes(text.toLowerCase())){
+            maches.push(animal)
+        }
+    }
+    const noMaches = maches.length == 0
+    res.render('search', maches, text, noMaches)
 })
 module.exports = router
