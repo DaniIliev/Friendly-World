@@ -30,7 +30,7 @@ const animalSchema = new mongoose.Schema({
         required: true
     },
     donations:{
-        type: mongoose.Types.ObjectId,
+        type: Array,
         ref: 'User'
     },
     owner:{

@@ -6,7 +6,16 @@ router.get('/:id/details', async (req,res) => {
     const animal = await animalManager.getById(animalId).lean()
     const isOwner = animal.owner._id == req.user?.id
 
-    res.render('details', {animal, isOwner})
+    let userDonated = false
+
+    for (const element of animal.donations) {
+        if(element._id == req.user.id){
+            userDonated = true
+        }
+    }
+
+
+    res.render('details', {animal, isOwner, userDonated})
 })
 
 router.get('/:id/edit', async (req,res) => {
@@ -38,6 +47,21 @@ router.get('/:id/delete', async (req,res) => {
     try{
         await animalManager.delete(animalId)
         res.redirect('/catalog')
+    }catch(err){
+        res.redirect('/404')
+    }
+})
+
+
+router.get('/:id/donate', async (req,res) => {
+    const animalId = req.params.id
+    const userId = req.user.id
+    try{
+        const animal = await animalManager.findOneAndPopulate(animalId)
+        animal.donations.push(userId)
+        animal.save()
+
+        res.redirect(`/animal/${animalId}/details`)
     }catch(err){
         res.redirect('/404')
     }
